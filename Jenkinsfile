@@ -16,16 +16,16 @@ pipeline {
     stage('Build Docker') {
       steps { sh 'docker build -t $IMAGE .' }
     }
-    stage('Push Docker') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: 'dockerhub-creds',
-        usernameVariable: 'DOCKER_USER',
-        passwordVariable: 'DOCKER_PASS')]) {
-          sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
-          sh 'docker push $IMAGE'
-        }
-      }
-    }
+    // stage('Push Docker') {
+    //   steps {
+    //     withCredentials([usernamePassword(credentialsId: 'dockerhub-creds',
+    //     usernameVariable: 'DOCKER_USER',
+    //     passwordVariable: 'DOCKER_PASS')]) {
+    //       sh 'echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin'
+    //       sh 'docker push $IMAGE'
+    //     }
+    //   }
+    // }
     stage('Deploy Locally') {
       steps {
         sh 'docker stop my-app || true'
